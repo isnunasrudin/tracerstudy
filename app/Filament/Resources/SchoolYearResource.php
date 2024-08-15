@@ -20,8 +20,8 @@ class SchoolYearResource extends Resource
     protected static ?string $model = SchoolYear::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
-    protected static ?string $label = "Tahun Ajaran";
-    protected static ?string $pluralLabel = "Tahun Ajaran";
+    protected static ?string $label = "Angkatan";
+    protected static ?string $pluralLabel = "Angkatan";
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -30,11 +30,11 @@ class SchoolYearResource extends Resource
             ->schema([
                 TextInput::make('year')
                     ->numeric()
-                    ->label('Tahun Ajaran')
+                    ->label('Tahun Angkatan')
                     ->required(),
 
                 TextInput::make('display_name')
-                    ->label('Nama Tahun Ajaran')
+                    ->label('Nama Tahun Angkatan')
                     ->required(),
             ]);
     }
@@ -43,7 +43,7 @@ class SchoolYearResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('display_name')->label('Nama Tahun Ajaran')->sortable(),
+                TextColumn::make('display_name')->label('Angkatan')->sortable(),
             ])
             ->filters([
                 //

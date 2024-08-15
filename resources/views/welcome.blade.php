@@ -1,29 +1,15 @@
-<!-- <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survei</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
-</head>
-<body>
-    <form action="" method="POST">    
-        @include('survey::standard', ['survey' => $survey])
-    </form>
-</body>
-</html> -->
-
 <x-layout title="Masuk">
     <div class="m-auto pb-4" style="width: 500px; z-index: 999">
         <h1 class="h5 text-center py-4 bg-primary m-0">Tracer Study Berdaya</h1>
-        <form class="p-5 pt-4 bg-white text-dark" method="POST" action="" autocomplete="off">
+        <form class="p-5 pt-4 text-dark" style="background-color: rgba(255, 255, 255, 0.9);-webkit-backdrop-filter: blur(5px);backdrop-filter: blur(5px);" method="POST" action="" autocomplete="off">
             @if($errors->any())
             <div class="alert alert-info">{{ $errors->first() }}</div>
+            @elseif(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
             @endif
             <div>
-                <label class="col-form-label">Nomor Induk Siswa Nasional <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="nisn" required value="{{ old('nisn') }}" placeholder="NISN">
+                <label class="col-form-label">NISN <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="nisn" required value="{{ old('nisn') }}" placeholder="Nomor Induk Siswa Nasional">
             </div>
             @csrf
             <div>

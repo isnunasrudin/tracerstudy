@@ -3,8 +3,8 @@
 return [
 
     'resources' => [
-        'AnswerResource' => \Tapp\FilamentSurvey\Resources\AnswerResource::class,
-        'EntryResource' => \Tapp\FilamentSurvey\Resources\EntryResource::class,
+        // 'AnswerResource' => \Tapp\FilamentSurvey\Resources\AnswerResource::class,
+        // 'EntryResource' => \Tapp\FilamentSurvey\Resources\EntryResource::class,
         'SurveyResource' => \Tapp\FilamentSurvey\Resources\SurveyResource::class,
     ],
 

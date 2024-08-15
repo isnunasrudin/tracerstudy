@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Student extends Authenticatable
@@ -16,5 +15,10 @@ class Student extends Authenticatable
     public function rombel()
     {
         return $this->belongsTo(Rombel::class);
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Hasil::class, 'participant_id');
     }
 }

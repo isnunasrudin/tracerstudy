@@ -7,6 +7,7 @@ use App\Models\SchoolYear;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ScrappingCommand extends Command
@@ -32,9 +33,10 @@ class ScrappingCommand extends Command
     {
         $result = json_decode(Storage::get('scrapping.json'));
 
-        $ta = SchoolYear::first();
+        $ta = SchoolYear::where('year', '2024')->first();
 
-        dd(collect($result->data->data)->filter(function($item){
+        DB::beginTransaction();
+        collect($result->data->data)->filter(function($item){
             return preg_match('/^12\s/', $item->anggota_rombel->rombongan_belajar->nama);
         })->map(function($item){
 
@@ -72,6 +74,7 @@ class ScrappingCommand extends Command
                 'rombel_id' => $rombel->id,
             ]);
 
-        }));
+        });
+        DB::commit();
     }
 }

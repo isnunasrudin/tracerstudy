@@ -39,7 +39,7 @@ class RombelResource extends Resource
 
                 Select::make('school_year_id')
                     ->relationship('school_year', 'display_name')
-                    ->label('Tahun Ajaran')->required(),
+                    ->label('Angkatan')->required(),
             ]);
     }
 
@@ -48,7 +48,7 @@ class RombelResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Rombel'),
-                TextColumn::make('school_year.display_name')->label('Tahun Ajaran'),
+                TextColumn::make('school_year.display_name')->label('Angkatan'),
             ])
             ->filters([
                 //

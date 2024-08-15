@@ -38,6 +38,14 @@ class WelcomeController extends Controller
         $born_date = $request->born_date;
 
         if( $student = Student::whereNisn($nisn)->whereBornDate($born_date)->first() ) {
+
+            if($student->entries()->exists())
+            {
+                throw ValidationException::withMessages([
+                    'nisn' => 'Anda sudah pernah mengisi Tracer Study!'
+                ]);
+            }
+
             $student->whatsapp = $request->phone;
             $student->save();
 

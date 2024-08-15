@@ -52,7 +52,7 @@ class StudentResource extends Resource
                 TextColumn::make('nisn')->label('NISN')->sortable()->searchable(),
                 TextColumn::make('name')->label('Nama')->sortable()->searchable(),
                 TextColumn::make('rombel.display_name')->label('Rombongan Belajar'),
-                TextColumn::make('rombel.school_year.display_name')->label('Tahun Ajaran'),
+                TextColumn::make('rombel.school_year.display_name')->label('Angkatan'),
             ])
             ->filters([
                 //
