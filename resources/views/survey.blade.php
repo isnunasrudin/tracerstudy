@@ -56,7 +56,7 @@
                 <div>
                     <label class="col-form-label">{{ $primary_option->content }} <span class="text-danger">*</span></label>
                     @foreach ($primary_option->options as $option)
-                    <div class="form-check">
+                    <div class="form-check" x-show="(!SaatIni.includes('Belum')) || ('{{$option}}' == 'Belum' && SaatIni.includes('Belum'))">
                         <input class="form-check-input" type="checkbox" value="{{$option}}" name="q{{$primary_option->id}}[]" id="input-{{$option}}" x-model="SaatIni">
                         <label class="form-check-label" for="input-{{$option}}">
                             {{ $option }}
@@ -67,7 +67,7 @@
             </div>
         
            @foreach ($survey->questions()->whereNot('id', 1)->whereHas('section')->with('section')->get()->groupBy('section.name') as $section => $questions)
-           <div x-show="SaatIni.includes('{{$section}}')">
+           <div x-show="(SaatIni.includes('{{$section}}') && !SaatIni.includes('Belum')) || ('{{$section}}' == 'Belum' && SaatIni.includes('Belum'))">
             <h1 class="h5 py-3 px-3 bg-primary mt-4 m-0 text-white">Kegiatan: <b>{{ $section }}</b></h1>
             <div class="px-5">
             @foreach ($questions as $question)

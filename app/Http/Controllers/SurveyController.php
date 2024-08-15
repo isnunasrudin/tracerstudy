@@ -23,15 +23,20 @@ class SurveyController extends Controller
 
     public function save(Request $request)
     {
+        $values = [];
         $rules = [];
         foreach (Survey::first()->questions()->whereDoesntHave('section')->get() as $question) {
             $rules["q$question->id"] = ['required'];
+            $values["q$question->id"] = $request["q$question->id"];
         };
 
         foreach (Survey::first()->questions()->whereHas('section')->get()->groupBy('section.name') as $group => $questions) {
-            $questions->each(function($question) use($group, $request, &$rules) {
+            $questions->each(function($question) use($group, $request, &$rules, &$values) {
                 $rules["q$question->id"] = [Rule::requiredIf(in_array($group, $request->q1))];
-
+                if(in_array($group, $request->q1))
+                {
+                    $values["q$question->id"] = $request["q$question->id"];
+                }
             });
         };
 
@@ -43,7 +48,7 @@ class SurveyController extends Controller
 
         try {
             DB::beginTransaction();
-            (new Entry())->for(Survey::first())->by(Auth::guard('student')->user())->fromArray($result)->push();
+            (new Entry())->for(Survey::first())->by(Auth::guard('student')->user())->fromArray($values)->push();
             $student =  Auth::guard('student')->user();
 
             $student->update([
@@ -55,7 +60,6 @@ class SurveyController extends Controller
                 'error' => $th->getMessage()
             ]);
         }
-
 
         Auth::guard('student')->logout();
         return redirect('/')->with('success', "Terima kasih $student->name telah bersedia mengisi TracerStudy SMKN 1 Pogalan");

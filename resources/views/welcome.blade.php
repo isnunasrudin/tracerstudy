@@ -19,6 +19,11 @@
             <div>
                 <label class="col-form-label mt-3">No. WhatsApp <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="phone" required value="{{ old('phone') }}">
+                <div class="alert alert-primary py-2" role="alert">
+                    <small><b>Pastikan nomor yang Anda masukkan benar-benar valid.</b>
+                    <!-- Kami akan mengirimkan bukti pengisian survei melalui Chat WhatsApp. -->
+                    </small>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary w-100 mt-4">MASUK!</button>
         </form>

@@ -213,4 +213,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'whatsapp_api' => env('WHATSAPP_API', 'http://localhost:3000')
+
 ];

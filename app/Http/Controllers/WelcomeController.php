@@ -37,12 +37,21 @@ class WelcomeController extends Controller
         $nisn = $request->nisn;
         $born_date = $request->born_date;
 
+        $whatsapp = (string) new PhoneNumber($request->phone);
+
+        if(Student::whereWhatsapp($whatsapp)->exists())
+        {
+            throw ValidationException::withMessages([
+                'phone.phone' => 'Nomor WhatsApp sudah digunakan!'
+            ]);
+        }
+
         if( $student = Student::whereNisn($nisn)->whereBornDate($born_date)->first() ) {
 
             if($student->entries()->exists())
             {
                 throw ValidationException::withMessages([
-                    'nisn' => 'Anda sudah pernah mengisi Tracer Study!'
+                    'nisn' => 'Terima Kasih. Anda telah mengisi Tracer Study!'
                 ]);
             }
 
