@@ -55,7 +55,7 @@ class WelcomeController extends Controller
                 ]);
             }
 
-            $student->whatsapp = $request->phone;
+            $student->whatsapp = $whatsapp;
             $student->save();
 
             Auth::guard('student')->loginUsingId($student->id);
