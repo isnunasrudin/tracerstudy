@@ -39,14 +39,14 @@ class WelcomeController extends Controller
 
         $whatsapp = (string) new PhoneNumber($request->phone, 'ID');
 
-        if(Student::whereWhatsapp($whatsapp)->exists())
-        {
-            throw ValidationException::withMessages([
-                'phone.phone' => 'Nomor WhatsApp sudah digunakan!'
-            ]);
-        }
-
         if( $student = Student::whereNisn($nisn)->whereBornDate($born_date)->first() ) {
+
+            if(Student::whereWhatsapp($whatsapp)->whereNot('id', $student->id)->exists())
+            {
+                throw ValidationException::withMessages([
+                    'phone.phone' => 'Nomor WhatsApp sudah digunakan!'
+                ]);
+            }
 
             if($student->entries()->exists())
             {
