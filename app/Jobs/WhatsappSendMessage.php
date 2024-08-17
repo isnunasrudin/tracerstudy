@@ -35,7 +35,7 @@ class WhatsappSendMessage implements ShouldQueue
      */
     public function handle(): void
     {
-        $filename = $this->student->id;
+        $filename = $this->student->id . ".jpg";
 
         $img = Image::create(1000, 1000);
 
