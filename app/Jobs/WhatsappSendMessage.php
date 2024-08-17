@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
@@ -77,11 +78,13 @@ class WhatsappSendMessage implements ShouldQueue
         $url = config('app.url');
         $url .= Storage::url($filename);
 
-        // Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
-        //     // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
-        //     'chatId' => "6282228403855@c.us",
-        //     "contentType" => "MessageMediaFromURL",
-        //     "content"=> $url
-        // ]);
+        return Log::info($url);
+
+        Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
+            // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
+            'chatId' => "6282228403855@c.us",
+            "contentType" => "MessageMediaFromURL",
+            "content"=> $url
+        ]);
     }
 }
