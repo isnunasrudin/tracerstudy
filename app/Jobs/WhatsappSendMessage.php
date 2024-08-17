@@ -39,7 +39,7 @@ class WhatsappSendMessage implements ShouldQueue
 
         $img = Image::create(1000, 1000);
 
-        $avatar = Image::read(Storage::disk('public')->path("selfie/01J5CPFR97SVT2R48NFT2KPF6Y.png"));
+        $avatar = Image::read(Storage::disk('public')->path($this->student->avatar));
         $avatar->cover(355, 355);
 
         $frame = Image::read(resource_path('jadi.png'));
@@ -77,11 +77,11 @@ class WhatsappSendMessage implements ShouldQueue
         $url = config('app.url');
         $url .= Storage::url($filename);
 
-        Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
-            // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
-            'chatId' => "6282228403855@c.us",
-            "contentType" => "MessageMediaFromURL",
-            "content"=> $url
-        ]);
+        // Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
+        //     // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
+        //     'chatId' => "6282228403855@c.us",
+        //     "contentType" => "MessageMediaFromURL",
+        //     "content"=> $url
+        // ]);
     }
 }
