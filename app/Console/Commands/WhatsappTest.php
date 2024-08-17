@@ -28,7 +28,7 @@ class WhatsappTest extends Command
      */
     public function handle()
     {
-        Student::whereHas('answers')->get()->each(function($student){
+        Student::whereHas('entries')->get()->each(function($student){
             WhatsappSendMessage::dispatchSync(new PhoneNumber($student->phone, 'ID'), $student);
         });
     }
