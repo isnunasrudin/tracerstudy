@@ -80,11 +80,11 @@ class WhatsappSendMessage implements ShouldQueue
 
         Log::info($url);
 
-        // Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
-        //     // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
-        //     'chatId' => "6282228403855@c.us",
-        //     "contentType" => "MessageMediaFromURL",
-        //     "content"=> $url
-        // ]);
+        Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
+            // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
+            'chatId' => "6282228403855@c.us",
+            "contentType" => "MessageMediaFromURL",
+            "content"=> $url
+        ]);
     }
 }
