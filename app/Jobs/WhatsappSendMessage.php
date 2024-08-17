@@ -73,10 +73,10 @@ class WhatsappSendMessage implements ShouldQueue
             $font->lineHeight(1.6);
         });
         
-        $img->save(Storage::path($filename));
+        $img->save(Storage::path('ahai/' . $filename));
 
         $url = config('app.url');
-        $url .= Storage::url($filename);
+        $url .= Storage::url("ahai/$filename");
 
         Log::info($url);
 
