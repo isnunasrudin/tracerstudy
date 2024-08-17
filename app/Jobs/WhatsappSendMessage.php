@@ -36,56 +36,59 @@ class WhatsappSendMessage implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->student->update(['notified_at' => now()]);
-        $filename = $this->student->id . ".jpg";
-
-        $img = Image::create(1000, 1000);
-
-        $avatar = Image::read(Storage::disk('public')->path($this->student->avatar));
-        $avatar->cover(355, 355);
-
-        $frame = Image::read(resource_path('jadi.png'));
-        $frame->cover(1000, 1000);
-
-        $img->place($avatar, 'center', 0, -230);
-        $img->place($frame);
-
-        $img->text($this->student->name, 350 + 150, 600 - 20, function (FontFactory $font) {
-            $font->filename(resource_path('arial.ttf'));
-            $font->size(40);
-            $font->color('fff');
-            $font->align('center');
-            $font->lineHeight(1.6);
-        });
-        
-        $img->text('Alumni '.$this->student->rombel->name.' - Tahun ' . $this->student->rombel->school_year->display_name, 350 + 150, 650 - 10, function (FontFactory $font) {
-            $font->filename(resource_path('arial.ttf'));
-            $font->size(30);
-            $font->color('fff');
-            $font->align('center');
-            $font->lineHeight(1.6);
-        });
-        
-        $img->text('Mengisi: ' . $this->student->entries()->first()->created_at, 350 + 150, 700 - 10, function (FontFactory $font) {
-            $font->filename(resource_path('arial.ttf'));
-            $font->size(25);
-            $font->color('fff');
-            $font->align('center');
-            $font->lineHeight(1.6);
-        });
-        
-        $img->save(Storage::disk('public')->path('ahai/' . $filename));
-
-        $url = config('app.url');
-        $url .= Storage::url("ahai/$filename");
-
-        Log::info($url);
-
-        Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
-            // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
-            'chatId' => preg_replace("/^0?8/", "628", substr($this->student->whatsapp, 1)) . "@c.us",
-            "contentType" => "MessageMediaFromURL",
-            "content"=> $url
-        ]);
+        if(Student::find($this->student->id)->notified_at == null)
+        {
+            $this->student->update(['notified_at' => now()]);
+            $filename = $this->student->id . ".jpg";
+    
+            $img = Image::create(1000, 1000);
+    
+            $avatar = Image::read(Storage::disk('public')->path($this->student->avatar));
+            $avatar->cover(355, 355);
+    
+            $frame = Image::read(resource_path('jadi.png'));
+            $frame->cover(1000, 1000);
+    
+            $img->place($avatar, 'center', 0, -230);
+            $img->place($frame);
+    
+            $img->text($this->student->name, 350 + 150, 600 - 20, function (FontFactory $font) {
+                $font->filename(resource_path('arial.ttf'));
+                $font->size(40);
+                $font->color('fff');
+                $font->align('center');
+                $font->lineHeight(1.6);
+            });
+            
+            $img->text('Alumni '.$this->student->rombel->name.' - Tahun ' . $this->student->rombel->school_year->display_name, 350 + 150, 650 - 10, function (FontFactory $font) {
+                $font->filename(resource_path('arial.ttf'));
+                $font->size(30);
+                $font->color('fff');
+                $font->align('center');
+                $font->lineHeight(1.6);
+            });
+            
+            $img->text('Mengisi: ' . $this->student->entries()->first()->created_at, 350 + 150, 700 - 10, function (FontFactory $font) {
+                $font->filename(resource_path('arial.ttf'));
+                $font->size(25);
+                $font->color('fff');
+                $font->align('center');
+                $font->lineHeight(1.6);
+            });
+            
+            $img->save(Storage::disk('public')->path('ahai/' . $filename));
+    
+            $url = config('app.url');
+            $url .= Storage::url("ahai/$filename");
+    
+            Log::info($url);
+    
+            Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
+                // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
+                'chatId' => preg_replace("/^0?8/", "628", substr($this->student->whatsapp, 1)) . "@c.us",
+                "contentType" => "MessageMediaFromURL",
+                "content"=> $url
+            ]);
+        }
     }
 }
