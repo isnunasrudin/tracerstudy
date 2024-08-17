@@ -6,6 +6,7 @@ use App\Filament\Resources\RespondResource\Pages;
 use App\Models\Hasil;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -53,8 +54,32 @@ class RespondResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('Kirim Bukti')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->fillForm(fn (Hasil $hasil) : array => [
+                        'name' => $hasil->student->name,
+                        'avatar' => $hasil->student->avatar,
+                        'rombel' => $hasil->student->rombel->name,
+                    ])
+                    ->form([
+                        TextInput::make('name')->disabled(),
+                        TextInput::make('rombel')->disabled(),
+                        Grid::make(1)->schema([
+                            FileUpload::make('avatar')
+                                ->directory('selfie')
+                                ->image()
+                                ->imageEditor()
+                                ->imageEditorViewportWidth('512')
+                                ->imageEditorViewportHeight('512')
+                                ->avatar()
+                        ]),
+                    ])
+                    ->action(function (array $data, Hasil $hasil){
+                        $hasil->student->update([
+                            'avatar' => $data['avatar']
+                        ]);
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

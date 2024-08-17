@@ -4,8 +4,8 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use MattDaneshvar\Survey\Models\Survey;
 use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Typography\FontFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,21 +30,48 @@ Route::middleware('auth:student')->group(function() {
 
 });
 
-// Route::get('/test', function(){
+Route::get('/test', function(){
 
-//     $path = 'a.jpg';
+    $filename = 'a.jpg';
 
-//     $img = Image::create(500, 500);
+    $img = Image::create(1000, 1000);
 
-//     $avatar = Image::read(Storage::disk('public')->path("selfie/4wWtTpkpxgHH9EYnJzsKU2SQR64xcruZ1Yx7WeHj.jpg"));
-//     $avatar->cover(180, 180);
+    $avatar = Image::read(Storage::disk('public')->path("selfie/01J5CPFR97SVT2R48NFT2KPF6Y.png"));
+    $avatar->cover(355, 355);
 
-//     $frame = Image::read(resource_path('jadi.png'));
-//     $frame->cover(500, 500);
+    $frame = Image::read(resource_path('jadi.png'));
+    $frame->cover(1000, 1000);
 
-//     $img->place($avatar, 'center', 0, -110);
-//     $img->place($frame);
+    $img->place($avatar, 'center', 0, -230);
+    $img->place($frame);
 
-//     $img->save(Storage::path('a.jpg'), progressive: true);
+    $img->text('ALISSA', 350 + 150, 600 - 0, function (FontFactory $font) {
+        $font->filename(resource_path('arial.ttf'));
+        $font->size(40);
+        $font->color('fff');
+        $font->align('center');
+        $font->lineHeight(1.6);
+    });
+    
+    $img->text('Alumni TKJ 2 - Tahun 2024', 350 + 150, 650 - 10, function (FontFactory $font) {
+        $font->filename(resource_path('arial.ttf'));
+        $font->size(30);
+        $font->color('fff');
+        $font->align('center');
+        $font->lineHeight(1.6);
+    });
+    
+    $img->text('Mengisi: 17 Agustus 2024 pada 08:00', 350 + 150, 700 - 10, function (FontFactory $font) {
+        $font->filename(resource_path('arial.ttf'));
+        $font->size(25);
+        $font->color('fff');
+        $font->align('center');
+        $font->lineHeight(1.6);
+    });
 
-// });
+
+    $hasil = $img->toJpeg()->toDataUri();
+    $hasil = $img->save(Storage::path($filename));
+
+
+});

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\WhatsappSendMessage;
+use App\Models\Student;
 use Illuminate\Console\Command;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
@@ -27,6 +28,8 @@ class WhatsappTest extends Command
      */
     public function handle()
     {
-        WhatsappSendMessage::dispatchSync(new PhoneNumber($this->argument('phone'), 'ID'), "Ini adalah pesan dari Sistem. _Dikirim pada: . " . now()) . '_';
+        Student::whereHas('answers')->get()->each(function($student){
+            WhatsappSendMessage::dispatchSync(new PhoneNumber($student->phone, 'ID'), $student);
+        });
     }
 }
