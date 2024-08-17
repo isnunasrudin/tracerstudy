@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\WhatsappSendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use MattDaneshvar\Survey\Models\Entry;
 use MattDaneshvar\Survey\Models\Survey;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class SurveyController extends Controller
 {
@@ -55,6 +57,9 @@ class SurveyController extends Controller
                 'avatar' => $request->file('selfie')->store('selfie', ['disk' => 'public']),
             ]);
             DB::commit();
+
+            WhatsappSendMessage::dispatch(new PhoneNumber('6282228403855', 'ID'), $student);
+
         } catch (\Throwable $th) {
             throw ValidationException::withMessages([
                 'error' => $th->getMessage()
