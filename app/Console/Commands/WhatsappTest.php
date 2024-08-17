@@ -14,7 +14,7 @@ class WhatsappTest extends Command
      *
      * @var string
      */
-    protected $signature = 'wa:test {phone}';
+    protected $signature = 'wa:test';
 
     /**
      * The console command description.
