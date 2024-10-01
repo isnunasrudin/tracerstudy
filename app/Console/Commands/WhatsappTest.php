@@ -2,11 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\WhatsappSendMessage;
-use App\Models\Student;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http as FacadesHttp;
-use Propaganistas\LaravelPhone\PhoneNumber;
 
 class WhatsappTest extends Command
 {
