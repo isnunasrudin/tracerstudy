@@ -33,7 +33,7 @@ class ScrappingCommand extends Command
     {
         $result = json_decode(Storage::get('scrapping.json'));
 
-        $ta = SchoolYear::where('year', '2024')->first();
+        $ta = SchoolYear::where('year', '2025')->first();
 
         DB::beginTransaction();
         collect($result->data->data)->filter(function($item){
