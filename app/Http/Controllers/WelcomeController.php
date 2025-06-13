@@ -39,7 +39,9 @@ class WelcomeController extends Controller
 
         $whatsapp = (string) new PhoneNumber($request->phone, 'ID');
 
-        if( $student = Student::whereNisn($nisn)->whereBornDate($born_date)->first() ) {
+        // dd($nisn, $born_date);
+
+        if( $student = Student::whereNisn($nisn)->whereDate('born_date', $born_date)->first() ) {
 
             if(Student::whereWhatsapp($whatsapp)->whereNot('id', $student->id)->exists())
             {

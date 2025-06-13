@@ -1,0 +1,5 @@
+services:
+  wa:
+    image: aldinokemal2104/go-whatsapp-web-multidevice:v6.0.3
+    ports:
+      - 3000:3000

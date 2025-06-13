@@ -83,11 +83,10 @@ class WhatsappSendMessage implements ShouldQueue
     
             Log::info($url);
     
-            Http::baseUrl(config('app.whatsapp_api'))->post('/client/sendMessage/main', [
+            Http::baseUrl(config('app.whatsapp_api'))->asForm()->post('/send/image', [
                 // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
-                'chatId' => preg_replace("/^0?8/", "628", substr($this->student->whatsapp, 1)) . "@c.us",
-                "contentType" => "MessageMediaFromURL",
-                "content"=> $url
+                'phone' => preg_replace("/^0?8/", "628", substr($this->student->whatsapp, 1)),
+                "image_url"=> $url
             ]);
         }
     }

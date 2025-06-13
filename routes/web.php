@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
@@ -36,7 +37,7 @@ Route::get('/test', function(){
 
     $img = Image::create(1000, 1000);
 
-    $avatar = Image::read(Storage::disk('public')->path("selfie/01J5CPFR97SVT2R48NFT2KPF6Y.png"));
+    $avatar = Image::read(resource_path('/test.png'));
     $avatar->cover(355, 355);
 
     $frame = Image::read(resource_path('jadi.png'));
@@ -53,7 +54,7 @@ Route::get('/test', function(){
         $font->lineHeight(1.6);
     });
     
-    $img->text('Alumni TKJ 2 - Tahun 2024', 350 + 150, 650 - 10, function (FontFactory $font) {
+    $img->text('Alumni TKJ 2 - Tahun 2025', 350 + 150, 650 - 10, function (FontFactory $font) {
         $font->filename(resource_path('arial.ttf'));
         $font->size(30);
         $font->color('fff');
@@ -70,8 +71,19 @@ Route::get('/test', function(){
     });
 
 
-    $hasil = $img->toJpeg()->toDataUri();
-    $hasil = $img->save(Storage::path($filename));
+    $hasil = $img->save(Storage::disk('public')->path($filename));
+    $hasil = $img->toJpeg();
+    
+    $url = config('app.url');
+    $url .= Storage::url("$filename");
 
+    // dd($hasil);
 
+    $result = Http::baseUrl(config('app.whatsapp_api'))->attach('image', $hasil, 'a.jpg')->post('/send/image', [
+        // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
+        'phone' => "6285175303855@s.whatsapp.net",
+        // "image"=> $hasil
+    ]);
+
+    dd($result->body());
 });
