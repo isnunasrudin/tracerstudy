@@ -19,19 +19,18 @@ use Intervention\Image\Typography\FontFactory;
 |
 */
 
-Route::middleware('guest:student')->group(function(){
+Route::middleware('guest:student')->group(function () {
     Route::get('/', [WelcomeController::class, 'index'])->name('login');
     Route::post('/', [WelcomeController::class, 'login']);
 });
 
-Route::middleware('auth:student')->group(function() {
+Route::middleware('auth:student')->group(function () {
 
     Route::get('/home', [SurveyController::class, 'index'])->name('survey.show');
     Route::post('/home', [SurveyController::class, 'save']);
-
 });
 
-Route::get('/test', function(){
+Route::get('/test', function () {
 
     $filename = 'a.jpg';
 
@@ -53,7 +52,7 @@ Route::get('/test', function(){
         $font->align('center');
         $font->lineHeight(1.6);
     });
-    
+
     $img->text('Alumni TKJ 2 - Tahun 2025', 350 + 150, 650 - 10, function (FontFactory $font) {
         $font->filename(resource_path('arial.ttf'));
         $font->size(30);
@@ -61,7 +60,7 @@ Route::get('/test', function(){
         $font->align('center');
         $font->lineHeight(1.6);
     });
-    
+
     $img->text('Mengisi: 17 Agustus 2024 pada 08:00', 350 + 150, 700 - 10, function (FontFactory $font) {
         $font->filename(resource_path('arial.ttf'));
         $font->size(25);
@@ -73,7 +72,7 @@ Route::get('/test', function(){
 
     $hasil = $img->save(Storage::disk('public')->path($filename));
     $hasil = $img->toJpeg();
-    
+
     $url = config('app.url');
     $url .= Storage::url("$filename");
 
@@ -82,6 +81,7 @@ Route::get('/test', function(){
     $result = Http::baseUrl(config('app.whatsapp_api'))->attach('image', $hasil, 'a.jpg')->post('/send/image', [
         // 'chatId' => substr($this->phoneNumber->formatE164(), 1) . "@c.us",
         'phone' => "6285175303855@s.whatsapp.net",
+        'duration' => 86400
         // "image"=> $hasil
     ]);
 

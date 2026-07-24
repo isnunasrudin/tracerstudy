@@ -33,10 +33,9 @@ class SurveyController extends Controller
         };
 
         foreach (Survey::first()->questions()->whereHas('section')->get()->groupBy('section.name') as $group => $questions) {
-            $questions->each(function($question) use($group, $request, &$rules, &$values) {
+            $questions->each(function ($question) use ($group, $request, &$rules, &$values) {
                 $rules["q$question->id"] = [Rule::requiredIf(in_array($group, $request->q1))];
-                if(in_array($group, $request->q1))
-                {
+                if (in_array($group, $request->q1)) {
                     $values["q$question->id"] = $request["q$question->id"];
                 }
             });
@@ -48,6 +47,8 @@ class SurveyController extends Controller
 
         $result = $request->validate($rules);
 
+        $student = null;
+
         try {
             DB::beginTransaction();
             (new Entry())->for(Survey::first())->by(Auth::guard('student')->user())->fromArray($values)->push();
@@ -58,8 +59,10 @@ class SurveyController extends Controller
             ]);
             DB::commit();
 
-            WhatsappSendMessage::dispatch(new PhoneNumber('6282228403855', 'ID'), $student);
+            /** @var \App\Models\Student $student */
+            $student = $student->fresh();
 
+            WhatsappSendMessage::dispatch(new PhoneNumber($student->whatsapp, 'ID'), $student);
         } catch (\Throwable $th) {
             throw ValidationException::withMessages([
                 'error' => $th->getMessage()

@@ -21,12 +21,12 @@
                 <input type="text" class="form-control" name="phone" required value="{{ old('phone') }}">
                 <div class="alert alert-primary py-2" role="alert">
                     <small><b>Pastikan nomor yang Anda masukkan benar-benar valid.</b>
-                    <!-- Kami akan mengirimkan bukti pengisian survei melalui Chat WhatsApp. -->
+                        <!-- Kami akan mengirimkan bukti pengisian survei melalui Chat WhatsApp. -->
                     </small>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100 mt-4">MASUK!</button>
         </form>
-        <footer class="text-center mt-2" style="opacity: .22; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-white" target="_blank">L-155-4</a></footer>
+        <footer class="text-center mt-2" style="opacity: .22; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-white" target="_blank">L</a></footer>
     </div>
 </x-layout>

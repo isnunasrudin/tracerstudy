@@ -19,39 +19,39 @@
                 @foreach($survey->questions()->whereNot('id', 1)->whereDoesntHave('section')->get() as $question)
                 <div>
                     <label class="col-form-label">{{ $question->content }} <span class="text-danger">*</span></label>
-                        @if($question->type == 'text')
-                        <input type="text" class="form-control" name="q{{$question->id}}">
+                    @if($question->type == 'text')
+                    <input type="text" class="form-control" name="q{{$question->id}}">
 
-                        @elseif($question->type == 'multiselect')
-                        <select class="form-select" name="q{{$question->id}}">
-                            <option value="">Silahkan Pilih...</option>
-                            @foreach ($question->options as $option)
-                            <option value="{{$option}}">{{$option}}</option>
-                            @endforeach
-                        </select>
-
-                        @elseif($question->type == 'multiselect')
-                            @foreach ($question->options as $option)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$option}}" name="q{{$question->id}}" id="input-{{$option}}">
-                                <label class="form-check-label" for="input-{{$option}}">
-                                    {{ $option }}
-                                </label>
-                            </div>
-                            @endforeach
-
-                        @elseif($question->type == 'radio')
+                    @elseif($question->type == 'multiselect')
+                    <select class="form-select" name="q{{$question->id}}">
+                        <option value="">Silahkan Pilih...</option>
                         @foreach ($question->options as $option)
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="{{$option}}" name="q{{$question->id}}">
-                            <label class="form-check-label">
-                                {{ $option }}
-                            </label>
-                        </div>
+                        <option value="{{$option}}">{{$option}}</option>
                         @endforeach
+                    </select>
 
-                        @endif
+                    @elseif($question->type == 'multiselect')
+                    @foreach ($question->options as $option)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{$option}}" name="q{{$question->id}}" id="input-{{$option}}">
+                        <label class="form-check-label" for="input-{{$option}}">
+                            {{ $option }}
+                        </label>
                     </div>
+                    @endforeach
+
+                    @elseif($question->type == 'radio')
+                    @foreach ($question->options as $option)
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="{{$option}}" name="q{{$question->id}}">
+                        <label class="form-check-label">
+                            {{ $option }}
+                        </label>
+                    </div>
+                    @endforeach
+
+                    @endif
+                </div>
                 @endforeach
                 <div>
                     <label class="col-form-label">{{ $primary_option->content }} <span class="text-danger">*</span></label>
@@ -65,12 +65,12 @@
                     @endforeach
                 </div>
             </div>
-        
-           @foreach ($survey->questions()->whereNot('id', 1)->whereHas('section')->with('section')->get()->groupBy('section.name') as $section => $questions)
-           <div x-show="(SaatIni.includes('{{$section}}') && !SaatIni.includes('Belum')) || ('{{$section}}' == 'Belum' && SaatIni.includes('Belum'))">
-            <h1 class="h5 py-3 px-3 bg-primary mt-4 m-0 text-white">Kegiatan: <b>{{ $section }}</b></h1>
-            <div class="px-5">
-            @foreach ($questions as $question)
+
+            @foreach ($survey->questions()->whereNot('id', 1)->whereHas('section')->with('section')->get()->groupBy('section.name') as $section => $questions)
+            <div x-show="(SaatIni.includes('{{$section}}') && !SaatIni.includes('Belum')) || ('{{$section}}' == 'Belum' && SaatIni.includes('Belum'))">
+                <h1 class="h5 py-3 px-3 bg-primary mt-4 m-0 text-white">Kegiatan: <b>{{ $section }}</b></h1>
+                <div class="px-5">
+                    @foreach ($questions as $question)
                     <div>
                         <label class="col-form-label">{{ $question->content }} <span class="text-danger">*</span></label>
                         @if($question->type == 'text')
@@ -85,14 +85,14 @@
                         </select>
 
                         @elseif($question->type == 'multiselect')
-                            @foreach ($question->options as $option)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$option}}" name="q{{$question->id}}" id="input-{{$option}}">
-                                <label class="form-check-label" for="input-{{$option}}">
-                                    {{ $option }}
-                                </label>
-                            </div>
-                            @endforeach
+                        @foreach ($question->options as $option)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{$option}}" name="q{{$question->id}}" id="input-{{$option}}">
+                            <label class="form-check-label" for="input-{{$option}}">
+                                {{ $option }}
+                            </label>
+                        </div>
+                        @endforeach
 
                         @elseif($question->type == 'radio')
                         @foreach ($question->options as $option)
@@ -106,12 +106,12 @@
 
                         @endif
                     </div>
-            @endforeach
+                    @endforeach
+                </div>
             </div>
-           </div>
-           @endforeach
-   
-            <div class="px-5">        
+            @endforeach
+
+            <div class="px-5">
                 <button type="submit" class="btn btn-primary w-100 mt-4">SIMPAN !</button>
             </div>
 
