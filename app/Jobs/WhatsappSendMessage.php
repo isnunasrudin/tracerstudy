@@ -79,7 +79,7 @@ class WhatsappSendMessage implements ShouldQueue
 
             Log::info(Http::baseUrl(config('app.whatsapp_api'))->attach('image', $hasil, 'gambar.jpg')->post('/send/image', [
                 'phone' => substr($this->phoneNumber, 1),
-                'duration' => 86400,
+                'duration' => 86400 * 7,
                 'caption' => 'Silahkan tunjukkan bukti pengisian Tracer Study ini kepada petugas pengambilan ijazah'
             ]));
         }
