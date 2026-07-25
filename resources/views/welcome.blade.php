@@ -14,7 +14,7 @@
             @csrf
             <div>
                 <label class="col-form-label mt-3">Tanggal Lahir <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" name="born_date" max="2008-12-31" required value="{{ old('born_date') }}">
+                <input type="date" class="form-control" name="born_date" required value="{{ old('born_date') }}">
             </div>
             <div>
                 <label class="col-form-label mt-3">No. WhatsApp <span class="text-danger">*</span></label>
