@@ -32,6 +32,7 @@ Route::middleware('auth:student')->group(function () {
     Route::post('/home', [SurveyController::class, 'save']);
 
     Route::get('minta-bukti', MintaBuktiController::class)->name('minta-bukti');
+    Route::get('download-bukti', [MintaBuktiController::class, 'download'])->name('download-bukti');
 });
 
 Route::get('/test', function () {

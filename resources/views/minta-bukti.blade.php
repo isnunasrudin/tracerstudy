@@ -6,11 +6,11 @@
         </div>
 
         <div class="px-5 pt-3">
-            <p class="mb-0">Selanjutkan Anda bisa meminta bukti pengisian kepada WhatsApp kami melalui tombol dibawah ini:</p>
+            <p class="mb-0">Selanjutkan Anda bisa download bukti pengisian melalui tombol dibawah ini:</p>
 
-            <a target="_blank" href="{{ $link }}" type="submit" class="btn btn-success w-100 mt-4">MINTA BUKTI PENGISIAN !</a>
+            <a download="bukti-tracer.jpg" target="_blank" href="{{ $link }}" class="btn btn-success w-100 mt-4" title="Bukti Tracer">DOWNLOAD</a>
 
-            <b class="w-100 d-block mt-1 mb-3 text-danger" style="font-size: 10px;">Mohon tidak SPAM pesan</b>
+            <!-- <b class="w-100 d-block mt-1 mb-3 text-danger" style="font-size: 10px;">Mohon tidak SPAM pesan</b> -->
         </div>
         <footer class="text-center mt-2" style="opacity: .2; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-dark" target="_blank">L</a></footer>
     </div>
