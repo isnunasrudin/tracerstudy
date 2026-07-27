@@ -26,6 +26,7 @@ class WhatsappSendMessage implements ShouldQueue
     public function __construct(
         public PhoneNumber $phoneNumber,
         public Student $student,
+        // public bool $minta = false
     ) {}
 
     /**
@@ -33,7 +34,8 @@ class WhatsappSendMessage implements ShouldQueue
      */
     public function handle(): void
     {
-        if (Student::find($this->student->id)->notified_at == null) {
+        // if (Student::find($this->student->id)->notified_at == null) {
+        if (Storage::disk('public')->exists($this->student->avatar)) {
             $this->student->update(['notified_at' => now()]);
             $filename = $this->student->id . ".jpg";
 
@@ -75,12 +77,20 @@ class WhatsappSendMessage implements ShouldQueue
             // $img->save(Storage::disk('public')->path('ahai/' . $filename));
             $hasil = $img->toJpeg();
 
-            // Log::info($url);
+            // Log::info('aaa');
+
+            // $caption = $minta ? "Tunjukkan bukti ini kepada petugas pengambilan ijazah" : ;
+
+            $pesan = "Siap, noted ya! 👌
+
+Makasih udah konfirmasi. Silakan datang sesuai jadwal untuk ambil ijazahnya.
+
+Jangan lupa pakaian bebas rapi bersepatu! See you! ✨🎓";
 
             Log::info(Http::baseUrl(config('app.whatsapp_api'))->attach('image', $hasil, 'gambar.jpg')->post('/send/image', [
                 'phone' => substr($this->phoneNumber, 1),
                 'duration' => 86400 * 7,
-                'caption' => 'Jika Anda adalah ' . $this->student->name . ', silahkan balas pesan ini dengan *Baik, bukti sudah saya terima*'
+                'caption' => $pesan
             ]));
         }
     }

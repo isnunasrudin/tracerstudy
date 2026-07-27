@@ -23,40 +23,47 @@ class WelcomeController extends Controller
         $request->validate([
             'nisn' => 'required',
             'born_date' => 'required|date|before:now',
-            'phone' => 'required|min:5|phone:ID'
+            // 'phone' => 'required|min:5|phone:ID'
         ], [
             'nisn.required' => 'Nomor Induk Siswa Nasional tidak boleh kosong!',
             'born_date.required' => 'Tanggal Lahir tidak boleh kosong!',
             'born_date.date' => 'Tanggal Lahir tidak valid!',
             'born_date.before' => 'Tanggal Lahir tidak valid!',
-            'phone.required' => 'No. WhatsApp tidak boleh kosong!',
-            'phone.min' => 'No. WhatsApp tidak valid!',
-            'phone.phone' => 'No. WhatsApp tidak valid!'
+            // 'phone.required' => 'No. WhatsApp tidak boleh kosong!',
+            // 'phone.min' => 'No. WhatsApp tidak valid!',
+            // 'phone.phone' => 'No. WhatsApp tidak valid!'
         ]);
 
         $nisn = $request->nisn;
         $born_date = $request->born_date;
 
-        $whatsapp = (string) new PhoneNumber($request->phone, 'ID');
-
         // dd($nisn, $born_date);
 
         if ($student = Student::whereNisn($nisn)->whereDate('born_date', $born_date)->first()) {
 
-            if (Student::whereWhatsapp($whatsapp)->whereNot('id', $student->id)->exists()) {
-                throw ValidationException::withMessages([
-                    'phone.phone' => 'Nomor WhatsApp sudah digunakan!'
-                ]);
-            }
-
             if ($student->entries()->exists()) {
-                $time = $student->entries()->first()->created_at->diffForHumans();
-                throw ValidationException::withMessages([
-                    'nisn' => 'Terima Kasih. Anda telah mengisi Tracer Study pada ' . $time . '.'
-                ]);
+                // $time = $student->entries()->first()->created_at->diffForHumans();
+                // throw ValidationException::withMessages([
+                //     'nisn' => 'Terima Kasih. Anda telah mengisi Tracer Study pada ' . $time . '.'
+                // ]);
+            } else {
+
+                // try {
+                //     $whatsapp = (string) new PhoneNumber($request->phone, 'ID');
+                // } catch (\Throwable $th) {
+                //     throw ValidationException::withMessages([
+                //         'phone.phone' => 'No. WhatsApp tidak valid!'
+                //     ]);
+                // }
+
+                // if (Student::whereWhatsapp($whatsapp)->whereNot('id', $student->id)->exists()) {
+                //     throw ValidationException::withMessages([
+                //         'phone.phone' => 'Nomor WhatsApp sudah digunakan!'
+                //     ]);
+                // }
+                // $student->whatsapp = $whatsapp;
             }
 
-            $student->whatsapp = $whatsapp;
             $student->save();
 
             Auth::guard('student')->loginUsingId($student->id);

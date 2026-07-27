@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\MintaBuktiController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,8 @@ Route::middleware('auth:student')->group(function () {
 
     Route::get('/home', [SurveyController::class, 'index'])->name('survey.show');
     Route::post('/home', [SurveyController::class, 'save']);
+
+    Route::get('minta-bukti', MintaBuktiController::class)->name('minta-bukti');
 });
 
 Route::get('/test', function () {
@@ -87,3 +91,5 @@ Route::get('/test', function () {
 
     dd($result->body());
 });
+
+Route::post('webhook', WebhookController::class);

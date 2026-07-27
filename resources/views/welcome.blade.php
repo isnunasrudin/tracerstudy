@@ -16,15 +16,15 @@
                 <label class="col-form-label mt-3">Tanggal Lahir <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" name="born_date" required value="{{ old('born_date') }}">
             </div>
-            <div>
+            <!-- <div>
                 <label class="col-form-label mt-3">No. WhatsApp <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="phone" required value="{{ old('phone') }}">
                 <div class="alert alert-primary py-2" role="alert">
                     <small><b>Pastikan nomor yang Anda masukkan benar-benar valid.</b>
-                        <!-- Kami akan mengirimkan bukti pengisian survei melalui Chat WhatsApp. -->
+                        Kami akan mengirimkan bukti pengisian survei melalui Chat WhatsApp.
                     </small>
                 </div>
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary w-100 mt-4">MASUK!</button>
         </form>
         <footer class="text-center mt-2" style="opacity: .22; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-white" target="_blank">L</a></footer>

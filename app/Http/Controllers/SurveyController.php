@@ -16,8 +16,14 @@ class SurveyController extends Controller
 {
     public function index()
     {
+        $student = Auth::guard('student')->user();
+
+        if ($student->entries()->exists()) {
+            return redirect()->route('minta-bukti');
+        }
+
         return view('survey', [
-            'student' => Auth::guard('student')->user(),
+            'student' => $student,
             'survey' => Survey::first(),
             'primary_option' => Survey::first()->questions()->first()
         ]);
@@ -69,7 +75,9 @@ class SurveyController extends Controller
             ]);
         }
 
-        Auth::guard('student')->logout();
-        return redirect('/')->with('success', "Terima kasih $student->name telah bersedia mengisi TracerStudy SMKN 1 Pogalan");
+        return redirect()->route('minta-bukti');
+
+        // Auth::guard('student')->logout();
+        // return redirect('/')->with('success', "Terima kasih $student->name telah bersedia mengisi TracerStudy SMKN 1 Pogalan");
     }
 }

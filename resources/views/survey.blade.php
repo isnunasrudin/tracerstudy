@@ -116,6 +116,6 @@
             </div>
 
         </form>
-        <footer class="text-center mt-2" style="opacity: .2; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-dark" target="_blank">L-155-4</a></footer>
+        <footer class="text-center mt-2" style="opacity: .2; font-size:15px">2024 - SMKN 1 Pogalan | <a href="//fb.me/SHeSHeOrankZ" class="text-dark" target="_blank">L</a></footer>
     </div>
 </x-layout>
