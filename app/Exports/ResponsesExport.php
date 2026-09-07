@@ -23,6 +23,7 @@ class ResponsesExport implements FromCollection, WithHeadings
             ->join('rombels', 'rombels.id', '=', 'students.rombel_id')
             ->join('school_years', 'school_years.id', '=', 'rombels.school_year_id')
             ->where('school_years.id', $this->schoolYearId)
+            ->whereNull('entries.deleted_at')
             ->orderBy('entries.created_at')
             ->orderBy('students.name')
             ->orderBy('answers.id')
