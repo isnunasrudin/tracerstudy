@@ -29,6 +29,7 @@ class ResponsesExport implements FromCollection, WithHeadings
         return [
             'Nama',
             'NISN',
+            'Kelas',
             'Angkatan',
             'Survei',
             ...array_values($this->questionHeadings),
@@ -57,6 +58,7 @@ class ResponsesExport implements FromCollection, WithHeadings
                 'students.id as student_id',
                 'students.name as nama',
                 'students.nisn',
+                'rombels.display_name as kelas',
                 'school_years.display_name as angkatan',
                 DB::raw("JSON_UNQUOTE(JSON_EXTRACT(surveys.name, '$.en')) as survei"),
                 'questions.id as question_id',
@@ -81,6 +83,7 @@ class ResponsesExport implements FromCollection, WithHeadings
                 $rows[$answer->student_id] = [
                     'Nama' => $answer->nama,
                     'NISN' => $answer->nisn,
+                    'Kelas' => $answer->kelas,
                     'Angkatan' => $answer->angkatan,
                     'Survei' => $answer->survei,
                     'answers' => [],
@@ -94,6 +97,7 @@ class ResponsesExport implements FromCollection, WithHeadings
             $values = [
                 $row['Nama'],
                 $row['NISN'],
+                $row['Kelas'],
                 $row['Angkatan'],
                 $row['Survei'],
             ];
